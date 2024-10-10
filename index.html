@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Загадка для Умиды</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f8ff;
+            text-align: center;
+            padding: 50px;
+        }
+        h1 {
+            color: #ff69b4;
+        }
+        .question {
+            margin: 20px 0;
+        }
+        .result {
+            display: none;
+            font-size: 24px;
+            color: #32cd32;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #ff69b4;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #ff1493;
+        }
+        .final-message {
+            display: none;
+            font-size: 24px;
+            color: #ff69b4;
+            margin-top: 20px;
+        }
+        .hidden-image {
+            display: none;
+            margin-top: 20px;
+        }
+        img {
+            width: 500px;
+            height: auto;
+            border-radius: 15px;
+            margin: 0 auto;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Загадка для Умиды</h1>
+
+    <!-- Добавляем аудиофайл -->
+    <audio id="backgroundMusic" src="music.mp3" loop></audio>
+
+    <!-- Кнопка для запуска музыки -->
+    <button id="playMusicButton" onclick="playMusic()">Нажми, чтобы включить музыку</button>
+
+    <div class="question" id="question1" style="display: none;">
+        <p>Вопрос 1: Если бы ты могла отправиться в любую точку мира прямо сейчас, куда бы ты полетела?</p>
+        <button onclick="checkAnswer(1, 'париж')">Париж</button>
+        <button onclick="checkAnswer(1, 'малдивы')">Мальдивы</button>
+        <button onclick="checkAnswer(1, 'лондон')">Лондон</button>
+    </div>
+
+    <div class="question" id="question2" style="display: none;">
+        <p>Вопрос 2: Какой твой любимый десерт?</p>
+        <button onclick="checkAnswer(2, 'мороженое')">Мороженое</button>
+        <button onclick="checkAnswer(2, 'чизкейк')">Чизкейк</button>
+        <button onclick="checkAnswer(2, 'торт')">Торт</button>
+    </div>
+
+    <div class="question" id="question3" style="display: none;">
+        <p>Вопрос 3: Какое у тебя любимое хобби?</p>
+        <button onclick="checkAnswer(3, 'рисование')">Невидимость</button>
+        <button onclick="checkAnswer(3, 'чтение')">Умение летать</button>
+        <button onclick="checkAnswer(3, 'Баскетбол')">Чтение мыслей</button>
+    </div>
+
+    <div class="result" id="successMessage">
+        <p>Ты великолепна! Вот твой сюрприз:</p>
+        <div class="final-message">
+            <p>Ты самая удивительная девушка на свете, Умида! 💖</p>
+            <img class="hidden-image" src="/image.png" alt="Сюрприз">
+        </div>
+    </div>
+
+    <div class="result" id="failureMessage">
+        <p>Неправильно! Попробуй снова!</p>
+    </div>
+
+    <script>
+        let currentQuestion = 1;
+        const correctAnswers = {
+            1: 'париж',
+            2: 'торт',
+            3: 'Баскетбол'
+        };
+
+        // Функция для воспроизведения музыки
+        function playMusic() {
+            const music = document.getElementById('backgroundMusic');
+            const playButton = document.getElementById('playMusicButton');
+            music.play();
+            playButton.style.display = 'none'; // Скрываем кнопку после нажатия
+            document.getElementById('question1').style.display = 'block'; // Показываем первый вопрос
+        }
+
+        function checkAnswer(questionNumber, answer) {
+            if (answer === correctAnswers[questionNumber]) {
+                document.getElementById(`question${questionNumber}`).style.display = 'none';
+                currentQuestion++;
+
+                if (currentQuestion <= 3) {
+                    document.getElementById(`question${currentQuestion}`).style.display = 'block';
+                } else {
+                    document.getElementById('successMessage').style.display = 'block';
+                    document.querySelector('.final-message').style.display = 'block';
+                    document.querySelector('.hidden-image').style.display = 'block';
+                }
+            } else {
+                document.getElementById('failureMessage').style.display = 'block';
+                setTimeout(() => {
+                    document.getElementById('failureMessage').style.display = 'none';
+                }, 2000);
+            }
+        }
+    </script>
+
+</body>
+</html>
